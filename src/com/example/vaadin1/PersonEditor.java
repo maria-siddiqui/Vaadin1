@@ -1,95 +1,132 @@
 package com.example.vaadin1;
-
-import java.awt.CheckboxGroup;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.DateField;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Form;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.OptionGroup;
-import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class PersonEditor extends VerticalLayout {
 	
+	private PropertyChangeEvent propChangeEvent;
+	private PropertyChangeListener propChangeListener;
 	private PropertyChangeSupport propChangeSupp;
-//	BeanItemContainer<Person> container = new BeanItemContainer<Person>(Person.class);
 
 	Person person = new Person();
+	BeanItemContainer<Person> container = new BeanItemContainer<Person>(Person.class);
+	private BeanItem<Person> item;
+
 	public PersonEditor(Person person){
 		this.person = person;
 		propChangeSupp = new PropertyChangeSupport(this);
 		}
+	
 	public void setPerson(Person person) {
 			Person oldPerson = this.person;
 			this.person = person;
 			PropertyChangeEvent event = new PropertyChangeEvent(this, "person", oldPerson, person);
 			propChangeSupp.firePropertyChange(event);
+			System.out.println(person);
 			}
+	
 	public Person getPerson() {
 			return person;
-		}
-	TextField t1 = new TextField("Enter Name");
-	TextField t2 = new TextField("Enter ID");
-	TextField t3 = new TextField("Enter Age");
-	CheckBox check1 = new CheckBox("Gender");
-	OptionGroup optionGroup1 = new OptionGroup("Gender");
-	Select mySelect1 = new Select();
-	Label l2 = new Label("Marital Status");
-	final CheckBox checkBox2 = new CheckBox("Married");
-	HorizontalLayout horizontal = new HorizontalLayout();
+	}
 	
+	TextField idText = new TextField("Enter Id");
+	TextField nameText = new TextField("Enter Name");
+	TextField ageText = new TextField("Enter Age");
+	OptionGroup genderOption = new OptionGroup("Gender");
+	Label label = new Label("Marital Status");
+	final CheckBox maritalCheck = new CheckBox("Married");
+	
+	//apply functions will copy from the PersonEditor to the Person bean.
+	public void applyToId() { 
+		person.setId(Integer.parseInt(idText.getValue().toString()));
+	}
+	
+	public void applyToName() {
+		person.setName(nameText.getValue().toString());
+	}
+	
+	public void applyToAge() { 
+		person.setAge(Integer.parseInt(ageText.getValue().toString()));
+	}
+	
+	public void applyToGender() {
+		person.setGender(genderOption.getValue().toString());
+	}
+
+	public void applyToMaritalStatus() {
+		person.setMaritalStatus(maritalCheck.getValue().toString());
+	}
+	
+//	Update functions will copy Person's bean property to Person Editor component.
+	public void updateToId() {
+		idText.setPropertyDataSource(item.getItemProperty("id"));
+	}
+
+	public void updateToName() {
+		nameText.setPropertyDataSource(item.getItemProperty("name"));
+	}
+	
+	public void updateToAge() {
+		ageText.setPropertyDataSource(item.getItemProperty("age"));
+	}
+
+	public void updateToGender() {
+		genderOption.setPropertyDataSource(item.getItemProperty("gender"));
+	}
+	
+	public void updateToMaritalStatus() {
+		maritalCheck.setPropertyDataSource(item.getItemProperty("maritalStatus"));
+	}
+
 	public PersonEditor() {
 		super();
 		initUI();
 		}
+	
+	PropertyChangeListener propChangeListn = new PropertyChangeListener() {
+		
+        @Override
+        public void propertyChange(PropertyChangeEvent event) {
+        	System.out.println("In listener");
+            String property = event.getPropertyName();
+            System.out.println(property);
+            }
+        };
+        
 	public void initUI(){
-		t1.setMaxLength(15);
-		t1.setImmediate(true);
+		idText.setImmediate(true);
+		nameText.setMaxLength(15);
+		nameText.setImmediate(true);
+		ageText.setImmediate(true);
+		genderOption.addItem("Male");
+		genderOption.addItem("Female");
+		genderOption.setImmediate(true);
+		maritalCheck.setImmediate(true);
 		
-		
-//		Label l1 = new Label("Enter Date Of Birth");
-//		DateField dof = new DateField();
-//		// Display only year, month, and day in ISO format
-//		dof.setDateFormat("yyyy-MM-dd");
-		
-		optionGroup1.addItem("Male");
-		optionGroup1.addItem("Female");
-		mySelect1.setMultiSelect(false);// Use the single selection mode.
-		
-//		CheckBox check2 = new CheckBox("Marital Status");
-//		OptionGroup optionGroup2 = new OptionGroup("Marital Status");
-//		// Use the single selection mode.
-//		optionGroup2.addItem("Single");
-//		optionGroup2.addItem("Married");
-//		Select mySelect2 = new Select();
-//		mySelect2.setMultiSelect(false);
-		
-//		final CheckBox checkBox3 = new CheckBox("Single");
-//		HorizontalLayout horizontalLayout = new HorizontalLayout();
-//		horizontalLayout.addComponent(checkBox2);
-//		horizontalLayout.addComponent(checkBox3);
-		
-		horizontal.setSpacing(true);
-		horizontal.setMargin(true, true, true, true);
+		System.out.println("inits");
+		maritalCheck.setValue(true);
+		System.out.println(maritalCheck.getValue().toString());	
 		
 		setSpacing(true);
 		setMargin(true, true, true, true);
-		
-		addComponent(t1);
-		addComponent(t2);
-		addComponent(t3);
-//		addComponent(l1);
-//		addComponent(dof);
-		addComponent(optionGroup1);
-//		addComponent(optionGroup2);
-//		addComponent(horizontalLayout);
-		addComponent(l2);
-		addComponent(checkBox2);
+		addComponent(idText);
+		addComponent(nameText);
+		addComponent(ageText);
+		addComponent(genderOption);
+		addComponent(label);
+		addComponent(maritalCheck);
+			
 	}
+	
 }
 

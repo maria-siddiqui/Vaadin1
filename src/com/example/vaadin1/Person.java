@@ -8,68 +8,89 @@ public class Person {
 	private long id;
 	private String name;
 	private int age;
-	private String status;
+	private String gender;
+	private String maritalStatus;
 	
 	private PropertyChangeSupport propChangeSupp;
 	
-	public Person(long id, String name, int age, String status) {
+	public Person(long id, String name, int age, String gender, String maritalStatus) {
 			this.id = id;
 			this.name = name;
 			this.age = age;
-			this.status = status;
+			this.gender=gender;
+			this.maritalStatus = maritalStatus;
 			propChangeSupp = new PropertyChangeSupport(this);
 		}
 	
-	  public Person(){
+	public Person(){
 		  id = 0l;
           name = "";
           age = 0;
-          status = "";
+          gender = "";
+          maritalStatus = "";
           propChangeSupp = new PropertyChangeSupport(this);
       }
-	  
-	  public void setId(long id) {
-			Long oldId = this.id;
+	
+	public void setId(long id) {
+			long oldId = this.id;
 			this.id = id;
 			PropertyChangeEvent event = new PropertyChangeEvent(this, "id", oldId, id);
 			propChangeSupp.firePropertyChange(event);
 		}
-	  public void setName(String name) {
+	
+	public void setName(String name) {
 			String oldName = this.name;
 			this.name = name;
 			PropertyChangeEvent event = new PropertyChangeEvent(this, "name", oldName, name);
 			propChangeSupp.firePropertyChange(event);
 		}
-	  public void setAge(int age) {
+	
+	public void setAge(int age) {
 			int oldAge = this.age;
 			this.age = age;
 			PropertyChangeEvent event = new PropertyChangeEvent(this, "age", oldAge, age);
 			propChangeSupp.firePropertyChange(event);
 		}
-	  public void setStatus(String status) {
-			String oldStatus = this.status;
-			this.status = status;
-			PropertyChangeEvent event = new PropertyChangeEvent(this, "status", oldStatus, status);
+	  
+	public void setGender(String gender) {
+		String oldGender = this.gender;
+			this.gender = gender;
+			PropertyChangeEvent event = new PropertyChangeEvent(this, "gender", oldGender, gender);
 			propChangeSupp.firePropertyChange(event);
 		}
 	  
-	  public long getId() {
+	public void setMaritalStatus(String maritalStatus) {
+		String oldMaritalStatus = this.maritalStatus;
+			this.maritalStatus = maritalStatus;
+			PropertyChangeEvent event = new PropertyChangeEvent(this, "maritalStatus", oldMaritalStatus, maritalStatus);
+			propChangeSupp.firePropertyChange(event);
+		}
+	  
+	public long getId() {
 			return id;
 		}
-	  public String getName() {
+	
+	public String getName() {
 			return name;
 		}
-	  public int getAge() {
-			return age;
+	
+	public int getAge() {
+		  return age;
 		}
-	  public String getStatus() {
-			return status;
+	  
+	public String getGender() {
+			return gender;
 		}
-		
-	  public void addPropertyChangeListener(PropertyChangeListener listener) {
+	
+	public String getMaritalStatus() {
+			return maritalStatus;
+		}
+	  
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
 			propChangeSupp.addPropertyChangeListener(listener);
 		}
-	  public void removePropertyChangeListener(PropertyChangeListener listener) {
+	
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
 			propChangeSupp.removePropertyChangeListener(listener);
 		}
 
