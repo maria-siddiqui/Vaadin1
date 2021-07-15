@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="Vaadin1">
+    <wb-module deploy-name="vaadin1">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="Vaadin1"/>
-        <property name="java-output-path" value="/Vaadin1/build/classes"/>
+        <property name="java-output-path" value="/vaadin1/build/classes"/>
+        <property name="context-root" value="vaadin1"/>
     </wb-module>
 </project-modules>

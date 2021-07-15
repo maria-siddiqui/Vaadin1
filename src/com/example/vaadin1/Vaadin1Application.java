@@ -12,11 +12,9 @@ public class Vaadin1Application extends Application {
 	public void init() {
 		Window mainWindow = new Window("Vaadin1 Application");
 		HorizontalLayout hL=new HorizontalLayout();
-		
-		Label label1 = new Label("Hello Vaadin user 1");
-		Label label2 = new Label("Hello Vaadin user 2");
-		hL.addComponent(label1);
-		hL.addComponent(label2);
+		PersonEditor personEditor = new PersonEditor();
+		//personEditor.initUI();
+		hL.addComponent(personEditor);
 		mainWindow.addComponent(hL);
 		setMainWindow(mainWindow);
 	}
